@@ -13,7 +13,7 @@ setup(
     description='Passbook file generator',
     long_description=open('README.md').read(),
 
-    download_url='http://pypi.python.org/packages/source/P/Passbook/Passbook-%s.tar.gz' % version,
+    download_url='git+https://github.com/SPTech-Group/passbook.git',
 
     install_requires=[
         'cryptography==3.3.1',
