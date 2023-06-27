@@ -5,19 +5,15 @@ version = __import__('passbook').__version__
 setup(
     name='Passbook',
     version=version,
-    author='Fernando Aramendi',
-    author_email='fernando@devartis.com',
+    author='RIZZO',
+    author_email='',
     packages=['passbook', 'passbook.test'],
-    url='http://github.com/devartis/passbook/',
+    url='http://github.com/SPTech-Group/passbook',
     license=open('LICENSE.txt').read(),
     description='Passbook file generator',
     long_description=open('README.md').read(),
 
     download_url='git+https://github.com/SPTech-Group/passbook.git',
-
-    install_requires=[
-        'cryptography==3.3.1',
-    ],
 
     classifiers=[
         'Development Status :: 3 - Alpha',
