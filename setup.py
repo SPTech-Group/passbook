@@ -26,4 +26,9 @@ setup(
         'Programming Language :: Python :: 3 :: Only',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
+
+    install_requires=[
+        'cryptography==3.3.1',
+    ],
+
 )

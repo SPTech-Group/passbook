@@ -54,7 +54,7 @@ class NumberStyle:
 class Field(object):
 
     def __init__(
-        self, key, value, label="", changeMessage="", textAlignment=Alignment.LEFT    
+        self, key, value, label="", changeMessage="", textAlignment=Alignment.LEFT
     ):
         self.key = key  # Required. The key must be unique within the scope
         self.value = value  # Required. Value of the field. For example, 42
@@ -338,9 +338,9 @@ class Pass(object):
         """
         Creates the hashes for all the files included in the pass file.
         """
-        self._hashes['pass.json'] = hashlib.sha256(pass_json.encode('utf-8')).hexdigest()
+        self._hashes['pass.json'] = hashlib.sha1(pass_json.encode('utf-8')).hexdigest()
         for filename, filedata in self._files.items():
-            self._hashes[filename] = hashlib.sha256(filedata).hexdigest()
+            self._hashes[filename] = hashlib.sha1(filedata).hexdigest()
         return json.dumps(self._hashes)
 
     # def _get_smime(self, certificate, key, wwdr_certificate, password):
@@ -381,7 +381,7 @@ class Pass(object):
     #     der = SMIME.BIO.MemoryBuffer()
     #     pk7.write_der(der)
     #     return der.read()
-    
+
     def _readFileBytes(self, path):
         """
         Utility function to read files as byte data
@@ -401,18 +401,18 @@ class Pass(object):
                          wwdr_certificate, password):
         """
         Creates a signature (DER encoded) of the manifest.
-        Rewritten to use cryptography library instead of M2Crypto 
+        Rewritten to use cryptography library instead of M2Crypto
         The manifest is the file
         containing a list of files included in the pass file (and their hashes).
         """
         cert = x509.load_pem_x509_certificate(self._encodeStrings(certificate))
         priv_key = serialization.load_pem_private_key(self._encodeStrings(key), password=password.encode('UTF-8'))
         wwdr_cert = x509.load_pem_x509_certificate(self._encodeStrings(wwdr_certificate))
-        
+
         options = [pkcs7.PKCS7Options.DetachedSignature]
         return pkcs7.PKCS7SignatureBuilder()\
                 .set_data(manifest.encode('UTF-8'))\
-                .add_signer(cert, priv_key, hashes.SHA256())\
+                .add_signer(cert, priv_key, hashes.SHA1())\
                 .add_certificate(wwdr_cert)\
                 .sign(serialization.Encoding.DER, options)
 
@@ -427,7 +427,7 @@ class Pass(object):
             zf.writestr(filename, filedata)
         zf.close()
         return self.zip_file
-    
+
     def read(self):
         """Returns a string with the contents of the in-memory zip."""
         if not self.zip_file:
