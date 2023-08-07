@@ -338,9 +338,9 @@ class Pass(object):
         """
         Creates the hashes for all the files included in the pass file.
         """
-        self._hashes['pass.json'] = hashlib.sha1(pass_json.encode('utf-8')).hexdigest()
+        self._hashes['pass.json'] = hashlib.sha256(pass_json.encode('utf-8')).hexdigest()
         for filename, filedata in self._files.items():
-            self._hashes[filename] = hashlib.sha1(filedata).hexdigest()
+            self._hashes[filename] = hashlib.sha256(filedata).hexdigest()
         return json.dumps(self._hashes)
 
     # def _get_smime(self, certificate, key, wwdr_certificate, password):
@@ -412,7 +412,7 @@ class Pass(object):
         options = [pkcs7.PKCS7Options.DetachedSignature]
         return pkcs7.PKCS7SignatureBuilder()\
                 .set_data(manifest.encode('UTF-8'))\
-                .add_signer(cert, priv_key, hashes.SHA1())\
+                .add_signer(cert, priv_key, hashes.SHA256())\
                 .add_certificate(wwdr_cert)\
                 .sign(serialization.Encoding.DER, options)
 
