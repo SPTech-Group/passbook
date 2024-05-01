@@ -28,7 +28,7 @@ setup(
     ],
 
     install_requires=[
-        'cryptography==3.3.1',
+        'cryptography==38.0.4',
     ],
 
 )
